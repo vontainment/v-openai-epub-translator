@@ -1,12 +1,12 @@
 # EPUB Translator
 
 ## Overview
-EPUB Translator is a Python application designed to translate EPUB files into different languages. It works by chunking the content of an EPUB file into manageable pieces, translating each piece using the OpenAI API, and then reassembling them into a translated EPUB file.
+EPUB Translator is a Python application designed for translating EPUB files into different languages. It chunks EPUB content into XHTML files, translates each piece using OpenAI API, and reassembles them into a complete, translated EPUB file. Rather than adhering to a literal, word-for-word translation, this takes into consideration the distinct cultural nuances, structural and syntactical variations, grammatical norms, idiomatic expressions, and cultural contexts of each language. Makes appropriate adjustments to ensure these elements are accurately represented, while still preserving the original tone and intent of the text. Be advised, use gpt-4, and stick with the default tolken size. it takes longer to translate but it will come out at a professional level.
 
 ## How It Works
-- **Chunking:** The application first breaks down the EPUB file into smaller XHTML files to ensure that each chunk does not exceed a specific token limit for effective translation.
-- **Translating:** Each chunk is then sent to the OpenAI API for translation, one at a time, to avoid overwhelming the API with large requests.
-- **Reassembling:** After all chunks are translated, the application reassembles these chunks back into a single EPUB file in the target language.
+- **Chunking:** Breaks down the EPUB file into smaller XHTML files, ensuring manageable pieces for translation.
+- **Translating:** Sends each chunk to the OpenAI API for translation, handling them one at a time.
+- **Reassembling:** Reconstructs the translated chunks back into a cohesive EPUB file in the target language.
 
 ## Installation Instructions
 1. **Clone the Repository:**
@@ -27,12 +27,25 @@ EPUB Translator is a Python application designed to translate EPUB files into di
    ```
 
 4. **Set Up Environment Variables:**
-   - Set your OpenAI API key in an environment variable:
-     ```bash
-     export OPENAI_API_KEY='your_api_key_here'
+   - Create a `.env` file in the root directory.
+   - Add your OpenAI API key and the model name:
+     ```env
+     OPENAI_API_KEY='your_api_key_here'
+     OPENAI_MODEL='model_name_here'
      ```
 
 ## Usage Instructions
+1. **Run the `run.sh` Script:**
+   - Execute the `run.sh` script to set up and run the application.
+   - The script will ask for input flags (input file, output directory, output language, and stage) and construct the command to run the Python scripts accordingly.
+   ```bash
+   ./run.sh
+   ```
+
+2. **Output:**
+   - The translated EPUB file will be saved in the specified output directory.
+
+## Manual Usage Instructions
 1. **Chunking the EPUB File:**
    - Run the script with the `--stage chunk` argument to chunk the EPUB file.
      ```bash
@@ -54,9 +67,13 @@ EPUB Translator is a Python application designed to translate EPUB files into di
 4. **Output:**
    - The translated EPUB file will be saved in the specified output directory.
 
-## Notes
-- Ensure your OpenAI API key has sufficient permissions and quota for the translation requests.
-- Adjust `max_chunk_tokens` in `process_ebook` function based on your needs and API limitations.
+## Customization
+- **Token Limit Adjustment:**
+  - Modify the `max_chunk_tokens` value in `.env` file to set the maximum token limit for chunking.
+
+## ISSUES AND TO-DOS
+- Currently the assembly function isn't working, it just creates a blank epub. but you can still use this script and manually take the epub pages it creates and import them yourself.
 
 ## Contribution
-Contributions to improve EPUB Translator are welcome. Feel free to fork the repository, make changes, and submit pull requests.
+Contributions to improve EPUB Translator are welcome. Fork the repository, make changes, and submit pull requests to collaborate.
+Remember to check API usage limits and adjust settings accordingly to avoid overwhelming the API with large translation requests.
